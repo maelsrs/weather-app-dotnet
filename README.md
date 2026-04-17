@@ -37,16 +37,16 @@ dotnet build
 
 ```
 weather-app-dotnet/
-├── App.xaml / App.xaml.cs         # Point d'entree de l'app
+├── App.xaml / App.xaml.cs         # Point d'entrée de l'app
 ├── MainPage.xaml                  # Interface (3 onglets)
 ├── MainPage.xaml.cs               # Logique des onglets
-├── Models/                        # Classes de donnees
-│   ├── WeatherData.cs             # Meteo actuelle
-│   ├── ForecastData.cs            # Previsions
-│   └── AppOptions.cs              # Parametres de l'app
+├── Models/                        # Classes de données
+│   ├── WeatherData.cs             # Météo actuelle
+│   ├── ForecastData.cs            # Prévisions
+│   └── AppOptions.cs              # Paramètres de l'app
 ├── Services/
 │   ├── WeatherService.cs          # Appels API OpenWeatherMap
-│   └── SettingsService.cs         # Lecture/ecriture options.json
+│   └── SettingsService.cs         # Lecture/écriture options.json
 ├── Platforms/Desktop/Program.cs   # Main() desktop
 ├── Assets/                        # Icones et splash screen
 └── WeatherApp.csproj              # Configuration du projet
@@ -54,6 +54,6 @@ weather-app-dotnet/
 
 ## Parametres
 
-Le fichier `options.json` est cree automatiquement au premier lancement dans :
+Le fichier `options.json` se crée automatiquement au premier lancement dans :
 
-Il contient la cle API OpenWeatherMap, la ville par defaut et la langue.
+Il contient la clé API OpenWeatherMap, la ville par defaut et la langue.
