@@ -1,0 +1,94 @@
+<Page x:Class="WeatherApp.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <TabView IsAddTabButtonVisible="False">
+
+    <TabViewItem Header="Recherche" IsClosable="False">
+      <StackPanel Margin="20" Spacing="12" MinWidth="400">
+        <TextBlock Text="Rechercher une ville" FontSize="20" FontWeight="Bold"/>
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBox x:Name="SearchCityInput" PlaceholderText="Ex : Paris" Width="260"/>
+          <Button Content="Rechercher" Click="OnSearchClick"/>
+        </StackPanel>
+
+        <TextBlock x:Name="SearchError" Foreground="Red" Visibility="Collapsed"/>
+
+        <StackPanel x:Name="SearchResult" Visibility="Collapsed" Spacing="6" Margin="0,16,0,0">
+          <TextBlock x:Name="ResCity" FontSize="22" FontWeight="Bold"/>
+          <Image x:Name="ResIcon" Width="100" Height="100" HorizontalAlignment="Left"/>
+          <TextBlock x:Name="ResCoords"/>
+          <TextBlock x:Name="ResTemp"/>
+          <TextBlock x:Name="ResDesc"/>
+          <TextBlock x:Name="ResHumidity"/>
+        </StackPanel>
+      </StackPanel>
+    </TabViewItem>
+
+    <TabViewItem Header="Previsions" IsClosable="False">
+      <StackPanel Margin="20" Spacing="12">
+        <TextBlock Text="Previsions sur 5 jours (12h00)" FontSize="20" FontWeight="Bold"/>
+
+        <StackPanel Orientation="Horizontal" Spacing="8">
+          <TextBox x:Name="ForecastCityInput" PlaceholderText="Ex : Paris" Width="260"/>
+          <Button Content="Obtenir previsions" Click="OnForecastClick"/>
+        </StackPanel>
+
+        <TextBlock x:Name="ForecastError" Foreground="Red" Visibility="Collapsed"/>
+
+        <ItemsControl x:Name="ForecastList">
+          <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Orientation="Horizontal" Spacing="10"/>
+            </ItemsPanelTemplate>
+          </ItemsControl.ItemsPanel>
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Border BorderBrush="Gray" BorderThickness="1" Padding="10" MinWidth="160" CornerRadius="6">
+                <StackPanel Spacing="4">
+                  <TextBlock Text="{Binding DateLabel}" FontWeight="Bold"/>
+                  <TextBlock Text="{Binding CityName}"/>
+                  <Image Source="{Binding IconUrl}" Width="64" Height="64" HorizontalAlignment="Left"/>
+                  <TextBlock Text="{Binding Coords}"/>
+                  <TextBlock Text="{Binding Temp}"/>
+                  <TextBlock Text="{Binding Description}"/>
+                  <TextBlock Text="{Binding Humidity}"/>
+                </StackPanel>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </TabViewItem>
+
+    <TabViewItem Header="Parametres" IsClosable="False">
+      <StackPanel Margin="20" Spacing="12" MinWidth="400">
+        <TextBlock Text="Parametres" FontSize="20" FontWeight="Bold"/>
+
+        <TextBlock Text="Cle API OpenWeatherMap"/>
+        <TextBox x:Name="ApiKeyInput" PlaceholderText="Votre cle API"/>
+
+        <TextBlock Text="Ville par defaut"/>
+        <TextBox x:Name="DefaultCityInput" PlaceholderText="Ex : Paris"/>
+
+        <TextBlock Text="Langue"/>
+        <ComboBox x:Name="LanguageCombo" Width="200" HorizontalAlignment="Left">
+          <ComboBoxItem Content="fr" Tag="fr"/>
+          <ComboBoxItem Content="en" Tag="en"/>
+          <ComboBoxItem Content="es" Tag="es"/>
+          <ComboBoxItem Content="de" Tag="de"/>
+          <ComboBoxItem Content="it" Tag="it"/>
+          <ComboBoxItem Content="pt" Tag="pt"/>
+          <ComboBoxItem Content="ru" Tag="ru"/>
+          <ComboBoxItem Content="ja" Tag="ja"/>
+          <ComboBoxItem Content="zh_cn" Tag="zh_cn"/>
+        </ComboBox>
+
+        <Button Content="Enregistrer" Click="OnSaveSettingsClick"/>
+        <TextBlock x:Name="SettingsStatus" Foreground="Green"/>
+      </StackPanel>
+    </TabViewItem>
+
+  </TabView>
+</Page>
