@@ -10,6 +10,10 @@ Application meteo en C# .NET utilisant Uno Platform et l'API OpenWeatherMap.
 ## Installation
 
 ```bash
+# Clone le repo
+git clone https://github.com/maelsrs/weather-app-dotnet
+cd weather-app-dotnet
+
 # Installer les templates Uno
 dotnet new install Uno.Templates
 
@@ -32,7 +36,7 @@ dotnet build
 ## Structure du projet
 
 ```
-weather-app-csharp/
+weather-app-dotnet/
 ├── App.xaml / App.xaml.cs         # Point d'entree de l'app
 ├── MainPage.xaml                  # Interface (3 onglets)
 ├── MainPage.xaml.cs               # Logique des onglets
