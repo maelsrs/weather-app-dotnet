@@ -1,5 +1,5 @@
 using System.IO;
-using System.Text.Json;
+using Newtonsoft.Json;
 using WeatherApp.Models;
 
 namespace WeatherApp.Services;
@@ -7,8 +7,7 @@ namespace WeatherApp.Services;
 public static class SettingsService
 {
     private static readonly string FilePath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-        "WeatherApp",
+        AppContext.BaseDirectory,
         "options.json");
 
     public static AppOptions Load()
@@ -21,7 +20,7 @@ public static class SettingsService
         }
 
         string json = File.ReadAllText(FilePath);
-        AppOptions? options = JsonSerializer.Deserialize<AppOptions>(json);
+        AppOptions? options = JsonConvert.DeserializeObject<AppOptions>(json);
         if (options == null) return new AppOptions();
         return options;
     }
@@ -32,10 +31,7 @@ public static class SettingsService
         if (dir != null && !Directory.Exists(dir))
             Directory.CreateDirectory(dir);
 
-        JsonSerializerOptions opts = new JsonSerializerOptions();
-        opts.WriteIndented = true;
-
-        string json = JsonSerializer.Serialize(options, opts);
+        string json = JsonConvert.SerializeObject(options, Formatting.Indented);
         File.WriteAllText(FilePath, json);
     }
 }

@@ -1,6 +1,5 @@
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text.Json;
+using Newtonsoft.Json;
 using WeatherApp.Models;
 
 namespace WeatherApp.Services;
@@ -10,12 +9,6 @@ public class WeatherService
     private const string BaseUrl = "https://api.openweathermap.org/data/2.5";
     private static readonly HttpClient Http = new HttpClient();
 
-    private static readonly JsonSerializerOptions JsonOptions = new JsonSerializerOptions
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
-        PropertyNameCaseInsensitive = true
-    };
-
     public async Task<WeatherData?> GetCurrentAsync(string city, string apiKey, string lang)
     {
         string url = BaseUrl + "/weather?q=" + Uri.EscapeDataString(city)
@@ -24,7 +17,8 @@ public class WeatherService
         HttpResponseMessage response = await Http.GetAsync(url);
         await EnsureApiOk(response, city);
 
-        return await response.Content.ReadFromJsonAsync<WeatherData>(JsonOptions);
+        string body = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<WeatherData>(body);
     }
 
     public async Task<ForecastData?> GetForecastAsync(string city, string apiKey, string lang)
@@ -35,7 +29,8 @@ public class WeatherService
         HttpResponseMessage response = await Http.GetAsync(url);
         await EnsureApiOk(response, city);
 
-        return await response.Content.ReadFromJsonAsync<ForecastData>(JsonOptions);
+        string body = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<ForecastData>(body);
     }
 
     private static async Task EnsureApiOk(HttpResponseMessage response, string city)

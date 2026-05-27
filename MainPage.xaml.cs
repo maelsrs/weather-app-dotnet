@@ -80,7 +80,7 @@ public sealed partial class MainPage : Page
 
             if (data.Weather.Count > 0)
             {
-                ResDesc.Text = "Temps : " + data.Weather[0].Description;
+                ResDesc.Text = "Temps : " + Capitalize(data.Weather[0].Description);
                 ResIcon.Source = new BitmapImage(new Uri(WeatherService.GetIconUrl(data.Weather[0].Icon)));
             }
             else
@@ -101,6 +101,12 @@ public sealed partial class MainPage : Page
     {
         SearchError.Text = msg;
         SearchError.Visibility = Visibility.Visible;
+    }
+
+    private static string Capitalize(string s)
+    {
+        if (string.IsNullOrEmpty(s)) return s;
+        return char.ToUpper(s[0]) + s.Substring(1);
     }
 
     private async void OnForecastClick(object sender, RoutedEventArgs e)
@@ -138,7 +144,7 @@ public sealed partial class MainPage : Page
                 if (cards.Count >= 5) break;
 
                 ForecastCardVm card = new ForecastCardVm();
-                DateTime date = DateTimeOffset.FromUnixTimeSeconds(item.Dt).LocalDateTime;
+                DateTime date = DateTimeOffset.FromUnixTimeSeconds(item.Dt).UtcDateTime;
                 card.DateLabel = date.ToString("dd/MM/yyyy HH:mm");
                 card.CityName = data.City.Name;
                 card.Coords = "Lat : " + data.City.Coord.Lat + " Lon : " + data.City.Coord.Lon;
@@ -147,7 +153,7 @@ public sealed partial class MainPage : Page
 
                 if (item.Weather.Count > 0)
                 {
-                    card.Description = item.Weather[0].Description;
+                    card.Description = Capitalize(item.Weather[0].Description);
                     card.IconUrl = WeatherService.GetIconUrl(item.Weather[0].Icon);
                 }
 

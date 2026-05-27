@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace WeatherApp.Models;
 
 public class ForecastData
@@ -9,7 +11,10 @@ public class ForecastData
 public class ForecastItem
 {
     public long Dt { get; set; }
+
+    [JsonProperty("dt_txt")]
     public string DtTxt { get; set; } = "";
+
     public Main Main { get; set; } = new Main();
     public List<Weather> Weather { get; set; } = new List<Weather>();
 }
